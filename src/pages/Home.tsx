@@ -1,5 +1,7 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export const Home: React.FC = () => {
 	const { user, signOut } = useAuth();
@@ -15,36 +17,45 @@ export const Home: React.FC = () => {
 						<span className="text-sm text-gray-600">
 							Welcome, {user?.name}!
 						</span>
-						<button
-							onClick={signOut}
-							className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
-						>
+						<Button variant="destructive" size="sm" onClick={signOut}>
 							Sign Out
-						</button>
+						</Button>
 					</div>
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-semibold mb-4">今日の薬</h2>
-						<p className="text-gray-600">
-							今日服用予定の薬がここに表示されます。
-						</p>
-					</div>
+					<Card>
+						<CardHeader>
+							<CardTitle>今日の薬</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="text-gray-600">
+								今日服用予定の薬がここに表示されます。
+							</p>
+						</CardContent>
+					</Card>
 
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-semibold mb-4">カレンダー</h2>
-						<p className="text-gray-600">
-							薬の服用スケジュールを確認できます。
-						</p>
-					</div>
+					<Card>
+						<CardHeader>
+							<CardTitle>カレンダー</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="text-gray-600">
+								薬の服用スケジュールを確認できます。
+							</p>
+						</CardContent>
+					</Card>
 
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-semibold mb-4">統計</h2>
-						<p className="text-gray-600">
-							服用状況の統計情報を表示します。
-						</p>
-					</div>
+					<Card>
+						<CardHeader>
+							<CardTitle>統計</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="text-gray-600">
+								服用状況の統計情報を表示します。
+							</p>
+						</CardContent>
+					</Card>
 				</div>
 			</div>
 		</div>
