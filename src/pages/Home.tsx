@@ -4,12 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useMedicationStatus, useCreateMedicationLog } from "@/hooks/useMedicationData";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
-import { formatDateJapanese } from "@/utils/date";
-import { Plus, Calendar, BarChart3 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
 
 export const Home: React.FC = () => {
-	const { user } = useAuth();
+	const { _user } = useAuth();
 	const { data: medicationStatus, isLoading: statusLoading } = useMedicationStatus();
 	const createLogMutation = useCreateMedicationLog();
 
