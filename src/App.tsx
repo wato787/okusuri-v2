@@ -4,8 +4,9 @@ import { Toaster } from "react-hot-toast";
 import { queryClient } from "./lib/queryClient";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { Layout } from "./components/Layout";
 
-// Import pages (will be created)
+// Import pages
 import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { Calendar } from "./pages/Calendar";
@@ -18,51 +19,66 @@ function App() {
 		<QueryClientProvider client={queryClient}>
 			<AuthProvider>
 				<Router>
-					<div className="min-h-screen bg-gray-50">
-						<Routes>
-							<Route path="/auth" element={<Auth />} />
-							<Route
-								path="/"
-								element={
+					<Routes>
+						<Route
+							path="/auth"
+							element={
+								<Layout showNavigation={false}>
+									<Auth />
+								</Layout>
+							}
+						/>
+						<Route
+							path="/"
+							element={
+								<Layout>
 									<ProtectedRoute>
 										<Home />
 									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="/calendar"
-								element={
+								</Layout>
+							}
+						/>
+						<Route
+							path="/calendar"
+							element={
+								<Layout>
 									<ProtectedRoute>
 										<Calendar />
 									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="/profile"
-								element={
+								</Layout>
+							}
+						/>
+						<Route
+							path="/profile"
+							element={
+								<Layout>
 									<ProtectedRoute>
 										<Profile />
 									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="/settings"
-								element={
+								</Layout>
+							}
+						/>
+						<Route
+							path="/settings"
+							element={
+								<Layout>
 									<ProtectedRoute>
 										<Settings />
 									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="/stats"
-								element={
+								</Layout>
+							}
+						/>
+						<Route
+							path="/stats"
+							element={
+								<Layout>
 									<ProtectedRoute>
 										<Stats />
 									</ProtectedRoute>
-								}
-							/>
-						</Routes>
-					</div>
+								</Layout>
+							}
+						/>
+					</Routes>
 					<Toaster position="top-center" />
 				</Router>
 			</AuthProvider>
