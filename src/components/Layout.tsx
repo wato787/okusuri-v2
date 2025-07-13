@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Header } from "./navigation/Header";
 import { BottomNav } from "./navigation/BottomNav";
 import { useAuth } from "@/contexts/AuthContext";

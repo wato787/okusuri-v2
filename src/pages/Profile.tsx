@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -19,13 +19,13 @@ export const Profile: React.FC = () => {
 					<CardContent>
 						<div className="space-y-4">
 							<div>
-								<label className="text-sm font-medium text-gray-600">名前</label>
+								<div className="text-sm font-medium text-gray-600">名前</div>
 								<p className="text-lg text-gray-900">{user?.name}</p>
 							</div>
 							<div>
-								<label className="text-sm font-medium text-gray-600">
+								<div className="text-sm font-medium text-gray-600">
 									メールアドレス
-								</label>
+								</div>
 								<p className="text-lg text-gray-900">{user?.email}</p>
 							</div>
 						</div>

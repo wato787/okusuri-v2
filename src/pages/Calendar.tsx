@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { MedicationCalendar } from "@/components/calendar/MedicationCalendar";
 
 export const Calendar: React.FC = () => {
