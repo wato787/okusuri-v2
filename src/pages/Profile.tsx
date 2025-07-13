@@ -1,37 +1,63 @@
 import type React from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export const Profile: React.FC = () => {
-	const { user } = useAuth();
-
 	return (
-		<div className="p-4">
-			<div className="max-w-4xl mx-auto">
-				<div className="mb-6">
-					<h1 className="text-3xl font-bold text-gray-900 mb-2">プロフィール</h1>
-					<p className="text-gray-600">アカウント情報を確認できます。</p>
-				</div>
-				<Card>
-					<CardHeader>
-						<CardTitle>ユーザー情報</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="space-y-4">
-							<div>
-								<div className="text-sm font-medium text-gray-600">名前</div>
-								<p className="text-lg text-gray-900">{user?.name}</p>
-							</div>
-							<div>
-								<div className="text-sm font-medium text-gray-600">
-									メールアドレス
-								</div>
-								<p className="text-lg text-gray-900">{user?.email}</p>
-							</div>
-						</div>
-					</CardContent>
-				</Card>
-			</div>
+		<div className="container max-w-md mx-auto pt-8 pb-24 px-4">
+			<Card>
+				<CardHeader>
+					<CardTitle>ユーザー情報</CardTitle>
+					<CardDescription>あなたの情報を更新できます</CardDescription>
+				</CardHeader>
+				<CardContent className="space-y-4">
+					<div className="space-y-2">
+						<Label htmlFor="name">名前</Label>
+						<Input id="name" placeholder="山田 花子" />
+					</div>
+					<div className="space-y-2">
+						<Label htmlFor="email">メールアドレス</Label>
+						<Input id="email" type="email" placeholder="your@email.com" />
+					</div>
+				</CardContent>
+				<CardFooter>
+					<Button className="w-full">保存する</Button>
+				</CardFooter>
+			</Card>
+
+			<Card className="mt-6">
+				<CardHeader>
+					<CardTitle>お薬情報</CardTitle>
+					<CardDescription>
+						服用しているお薬の情報を設定できます
+					</CardDescription>
+				</CardHeader>
+				<CardContent className="space-y-4">
+					<div className="space-y-2">
+						<Label htmlFor="medication-name">お薬の名前</Label>
+						<Input
+							id="medication-name"
+							placeholder="例：ピル、ホルモン剤など"
+						/>
+					</div>
+					<div className="space-y-2">
+						<Label htmlFor="medication-time">服用時間</Label>
+						<Input id="medication-time" type="time" />
+					</div>
+				</CardContent>
+				<CardFooter>
+					<Button className="w-full">保存する</Button>
+				</CardFooter>
+			</Card>
 		</div>
 	);
 };
