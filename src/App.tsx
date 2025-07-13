@@ -5,6 +5,7 @@ import { queryClient } from "./lib/queryClient";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
+import { PWAInstallPrompt } from "./components/PWAInstallPrompt";
 
 // Import pages
 import { Home } from "./pages/Home";
@@ -80,6 +81,7 @@ function App() {
 						/>
 					</Routes>
 					<Toaster position="top-center" />
+					<PWAInstallPrompt />
 				</Router>
 			</AuthProvider>
 		</QueryClientProvider>
