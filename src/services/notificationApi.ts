@@ -1,6 +1,4 @@
-import { getAuthToken } from '../lib/auth';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+import { apiClient } from '@/lib/apiClient';
 
 export interface NotificationSetting {
   id: string;
@@ -28,20 +26,9 @@ export const getNotificationSetting = async (): Promise<
   NotificationSetting | undefined
 > => {
   try {
-    const token = getAuthToken();
-    if (!token) return undefined;
-
-    const response = await fetch(`${API_BASE_URL}/api/notification/setting`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      return undefined;
-    }
-
-    return await response.json();
+    return await apiClient.get<NotificationSetting>(
+      '/api/notification/setting'
+    );
   } catch (error) {
     console.error('通知設定取得エラー:', error);
     return undefined;
@@ -53,24 +40,7 @@ export const registerNotificationSetting = async (
   data: RegisterNotificationSetting
 ): Promise<BaseResponse> => {
   try {
-    const token = getAuthToken();
-    if (!token) {
-      return { success: false, message: '認証が必要です' };
-    }
-
-    const response = await fetch(`${API_BASE_URL}/api/notification/setting`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      return { success: false, message: '通知設定の登録に失敗しました' };
-    }
-
+    await apiClient.post('/api/notification/setting', data);
     return { success: true };
   } catch (error) {
     console.error('通知設定登録エラー:', error);

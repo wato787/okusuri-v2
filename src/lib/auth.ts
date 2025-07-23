@@ -1,5 +1,4 @@
-// React/Vite環境では直接HTTPクライアントを使用
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+import { apiClient } from './apiClient';
 
 export interface User {
   id: string;
@@ -24,8 +23,7 @@ export interface AuthResponse {
 
 // Google OAuth認証開始
 export const signInWithGoogle = async (): Promise<void> => {
-  const response = await fetch(`${API_BASE_URL}/api/auth/google`);
-  const data = await response.json();
+  const data = await apiClient.get<{ url: string }>('/api/auth/google');
 
   if (data.url) {
     window.location.href = data.url;
@@ -39,7 +37,7 @@ export const getSession = async (
   token?: string
 ): Promise<AuthResponse | null> => {
   try {
-    const storedToken = token || localStorage.getItem('authToken');
+    const storedToken = token || getAuthToken();
     if (!storedToken) return null;
 
     // トークンが文字列であることを確認
@@ -49,21 +47,27 @@ export const getSession = async (
       return null;
     }
 
-    const response = await fetch(`${API_BASE_URL}/api/auth/session`, {
-      headers: {
-        Authorization: `Bearer ${storedToken}`,
-      },
-    });
+    // 一時的にトークンを設定
+    const originalToken = getAuthToken();
+    setAuthToken(storedToken);
 
-    if (!response.ok) {
-      if (response.status === 401) {
+    try {
+      const response = await apiClient.get<AuthResponse>('/api/auth/session');
+      return response;
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('401')) {
         localStorage.removeItem('authToken');
         return null;
       }
-      throw new Error('セッション取得に失敗しました');
+      throw error;
+    } finally {
+      // 元のトークンを復元
+      if (originalToken) {
+        setAuthToken(originalToken);
+      } else {
+        localStorage.removeItem('authToken');
+      }
     }
-
-    return await response.json();
   } catch (error) {
     console.error('セッション取得エラー:', error);
     return null;
@@ -73,14 +77,9 @@ export const getSession = async (
 // サインアウト
 export const signOut = async (): Promise<void> => {
   try {
-    const token = localStorage.getItem('authToken');
+    const token = getAuthToken();
     if (token) {
-      await fetch(`${API_BASE_URL}/api/auth/signout`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await apiClient.post('/api/auth/signout');
     }
   } catch (error) {
     console.error('サインアウトエラー:', error);
