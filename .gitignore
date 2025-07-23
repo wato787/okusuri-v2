@@ -110,6 +110,7 @@ pids
 # PWA
 sw.js
 workbox-*.js
+registerSW.js
 
 # Backup files
 *.bak
@@ -117,3 +118,6 @@ workbox-*.js
 
 # Local development
 .dev-dist
+dev-dist
+dist
+dist-ssr
