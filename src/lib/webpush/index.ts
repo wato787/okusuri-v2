@@ -12,7 +12,9 @@ class WebPushClient {
     }
 
     try {
-      this.swRegistration = await navigator.serviceWorker.register('/sw.js');
+      this.swRegistration = await navigator.serviceWorker.register('/sw.js', {
+        scope: '/',
+      });
       console.log('サービスワーカーが登録されました', this.swRegistration);
       return this.swRegistration;
     } catch (error) {

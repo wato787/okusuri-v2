@@ -38,9 +38,7 @@ export default defineConfig({
         ],
       },
       // カスタムService Workerを使用
-      strategies: 'injectManifest',
-      srcDir: 'public',
-      filename: 'sw.js',
+      strategies: 'generateSW',
       devOptions: {
         enabled: true,
       },

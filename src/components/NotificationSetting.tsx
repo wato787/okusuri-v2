@@ -9,7 +9,6 @@ import { initializeWebPush } from '@/lib/webpush';
 import {
   registerNotificationSetting,
   getNotificationSetting,
-  type NotificationSetting,
 } from '@/services/notificationApi';
 
 interface Props {

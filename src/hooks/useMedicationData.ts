@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/lib/apiClient';
-import {
-  type MedicationLog,
-  type MedicationLogRequest,
-  type MedicationStatus,
+import type {
+  MedicationLog,
+  MedicationLogRequest,
+  MedicationStatus,
 } from '@/types/medication';
 
 // 服薬ログを取得
