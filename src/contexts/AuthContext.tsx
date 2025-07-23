@@ -14,8 +14,8 @@ interface AuthContextType {
   session: Session | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  signOut: () => Promise<void>;
-  signInWithGoogle: () => Promise<void>;
+  signOut: () => void;
+  signInWithGoogle: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -70,12 +70,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     },
   });
 
-  const signOut = async () => {
-    await signOutMutation.mutateAsync();
+  const signOut = () => {
+    signOutMutation.mutate();
   };
 
-  const signInWithGoogle = async () => {
-    await googleSignInMutation.mutateAsync();
+  const signInWithGoogle = () => {
+    googleSignInMutation.mutate();
   };
 
   const user = authData?.user || null;
