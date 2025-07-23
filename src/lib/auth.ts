@@ -1,5 +1,5 @@
 // React/Vite環境では直接HTTPクライアントを使用
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 export interface User {
   id: string;
@@ -26,7 +26,7 @@ export interface AuthResponse {
 export const signInWithGoogle = async (): Promise<void> => {
   const response = await fetch(`${API_BASE_URL}/api/auth/google`);
   const data = await response.json();
-  
+
   if (data.url) {
     window.location.href = data.url;
   } else {
@@ -35,14 +35,23 @@ export const signInWithGoogle = async (): Promise<void> => {
 };
 
 // セッション情報取得
-export const getSession = async (token?: string): Promise<AuthResponse | null> => {
+export const getSession = async (
+  token?: string
+): Promise<AuthResponse | null> => {
   try {
     const storedToken = token || localStorage.getItem('authToken');
     if (!storedToken) return null;
 
+    // トークンが文字列であることを確認
+    if (typeof storedToken !== 'string') {
+      console.error('無効なトークン形式:', storedToken);
+      localStorage.removeItem('authToken');
+      return null;
+    }
+
     const response = await fetch(`${API_BASE_URL}/api/auth/session`, {
       headers: {
-        'Authorization': `Bearer ${storedToken}`,
+        Authorization: `Bearer ${storedToken}`,
       },
     });
 
@@ -69,7 +78,7 @@ export const signOut = async (): Promise<void> => {
       await fetch(`${API_BASE_URL}/api/auth/signout`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
     }
